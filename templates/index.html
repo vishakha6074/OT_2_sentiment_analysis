@@ -3,138 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Sentiment Analysis</title>
+    <title>Stock Market Sentiment Analysis</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            background-color: #0d1117;
-            overflow: hidden;
+            background-color: #000;
+            color: white;
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             height: 100vh;
-            font-family: Arial, sans-serif;
+            overflow: hidden;
+            position: relative;
         }
-        canvas {
+
+        /* Background Globe */
+        #video-background {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            object-fit: cover;
+            z-index: -1; /* Ensures the video stays behind the content */
         }
-        .button-container {
-            position: relative;
-            z-index: 2;
+
+        .content {
+            text-align: center;
+            z-index: 1;
+            padding: 20px;
+            position: relative; /* Ensures the content stays above the video */
         }
-        .predict-button {
-            background: linear-gradient(45deg, #ff8c00, #ff0080);
-            color: white;
+
+        .content h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .content p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #b0b0b0;
+        }
+
+        .predict-btn {
             font-size: 20px;
             padding: 15px 30px;
             border: none;
-            border-radius: 30px;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            outline: none;
+            color: #fff;
+            background: linear-gradient(90deg, #ff8c00, #ff2e63);
+            border-radius: 10px;
+            transition: 0.3s ease-in-out;
+            box-shadow: 0 0 15px rgba(255, 140, 0, 0.7);
         }
-        .predict-button:hover {
+
+        .predict-btn:hover {
             transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(255, 140, 0, 0.7);
+            box-shadow: 0 0 25px rgba(255, 46, 99, 0.9);
         }
     </style>
 </head>
 <body>
-
-    <canvas id="canvas"></canvas>
-    <div class="button-container">
-        <button class="predict-button">Predict Sentiment</button>
+    <!-- Background video -->
+    <video id="video-background" autoplay loop muted>
+        <source src="{{ url_for('static', filename='globe.mp4') }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <!-- Content -->
+    <div class="content">
+        <h1>Unlock Market Trends with AI</h1>
+        <p>Analyze real-time stock market sentiment and make data-driven decisions.</p>
+        <button class="predict-btn">Predict Stock Market Sentiment</button>
     </div>
-
-    <script>
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        let particlesArray = [];
-        const numberOfParticles = 100;
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 3 + 1;
-                this.speedX = Math.random() * 2 - 1;
-                this.speedY = Math.random() * 2 - 1;
-            }
-
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-
-                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
-                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
-            }
-
-            draw() {
-                ctx.fillStyle = "#ffcc00";
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function createParticles() {
-            particlesArray = [];
-            for (let i = 0; i < numberOfParticles; i++) {
-                particlesArray.push(new Particle());
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-                particlesArray[i].draw();
-            }
-
-            connectParticles();
-            requestAnimationFrame(animate);
-        }
-
-        function connectParticles() {
-            for (let i = 0; i < particlesArray.length; i++) {
-                for (let j = i; j < particlesArray.length; j++) {
-                    let dx = particlesArray[i].x - particlesArray[j].x;
-                    let dy = particlesArray[i].y - particlesArray[j].y;
-                    let distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < 100) {
-                        ctx.strokeStyle = "rgba(255, 204, 0, 0.5)";
-                        ctx.lineWidth = 1;
-                        ctx.beginPath();
-                        ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
-                        ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-
-        window.addEventListener("resize", function () {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            createParticles();
-        });
-
-        createParticles();
-        animate();
-    </script>
 </body>
 </html>
