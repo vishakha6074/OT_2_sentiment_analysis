@@ -3,30 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Market Sentiment</title>
+    <title>Predict Sentiment</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
         body {
             margin: 0;
             padding: 0;
             background: #121212;
+            color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            font-family: Arial, sans-serif;
             overflow: hidden;
         }
+
         .container {
             text-align: center;
             color: #fff;
             position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 1.5s ease-in-out;
+            width: 350px;
         }
-        .title {
-            font-size: 3rem;
+
+        h2 {
+            font-size: 2rem;
             font-weight: bold;
             letter-spacing: 2px;
+            margin-bottom: 20px;
             animation: glow 1.5s infinite alternate ease-in-out;
         }
+
         @keyframes glow {
             from {
                 text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
@@ -35,38 +52,49 @@
                 text-shadow: 0 0 20px #00ffcc, 0 0 40px #00ffcc;
             }
         }
-        .button {
-            margin-top: 20px;
-            padding: 15px 30px;
-            font-size: 1.2rem;
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 15px;
             border: none;
             border-radius: 8px;
-            cursor: pointer;
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            resize: none;
+            font-size: 16px;
+            transition: 0.3s ease-in-out;
+        }
+
+        textarea:focus {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px #00ffcc;
+        }
+
+        .btn {
+            margin-top: 15px;
+            padding: 12px 25px;
             background: linear-gradient(45deg, #00ffcc, #0088ff);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 18px;
             color: #121212;
-            font-weight: bold;
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-            overflow: hidden;
+            transition: transform 0.3s ease-in-out, background 0.3s;
         }
-        .button::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300%;
-            height: 300%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 10%, rgba(255, 255, 255, 0) 70%);
-            transition: all 0.6s ease;
-            transform: translate(-50%, -50%) scale(0);
+
+        .btn:hover {
+            background: linear-gradient(45deg, #00ffcc, #0088ff);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #00ffcc;
         }
-        .button:hover::before {
-            transform: translate(-50%, -50%) scale(1);
+
+        .btn:active {
+            transform: scale(0.98);
+            box-shadow: 0 0 25px #00ffcc;
         }
-        .button:active {
-            transform: scale(0.95);
-            box-shadow: 0 0 20px #00ffcc;
-        }
+
         .particles {
             position: absolute;
             width: 100%;
@@ -75,6 +103,7 @@
             left: 0;
             pointer-events: none;
         }
+
         .particle {
             position: absolute;
             width: 5px;
@@ -84,6 +113,7 @@
             border-radius: 50%;
             animation: float 5s infinite ease-in-out;
         }
+
         @keyframes float {
             0% {
                 transform: translateY(0px) translateX(0px);
@@ -98,15 +128,31 @@
                 opacity: 0;
             }
         }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="title">Stock Market Sentiment Analysis</h1>
-        <button class="button" onclick="window.location.href='/predict';">Predict Sentiment</button>
+        <h2>Predict Sentiment</h2>
+        <form action="/predict" method="POST">
+            <textarea name="message" placeholder="Enter your message..."></textarea>
+            <br>
+            <button type="submit" class="btn">Know Sentiment</button>
+        </form>
     </div>
     <div class="particles"></div>
     <script>
+        // Function to create particles for background animation
         function createParticles() {
             const particleContainer = document.querySelector('.particles');
             for (let i = 0; i < 30; i++) {
@@ -122,3 +168,4 @@
     </script>
 </body>
 </html>
+
