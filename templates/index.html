@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Market Sentiment</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #121212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            color: #fff;
+            position: relative;
+        }
+        .title {
+            font-size: 3rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            animation: glow 1.5s infinite alternate ease-in-out;
+        }
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+            }
+            to {
+                text-shadow: 0 0 20px #00ffcc, 0 0 40px #00ffcc;
+            }
+        }
+        .button {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: linear-gradient(45deg, #00ffcc, #0088ff);
+            color: #121212;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .button::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 10%, rgba(255, 255, 255, 0) 70%);
+            transition: all 0.6s ease;
+            transform: translate(-50%, -50%) scale(0);
+        }
+        .button:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .button:active {
+            transform: scale(0.95);
+            box-shadow: 0 0 20px #00ffcc;
+        }
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #00ffcc;
+            opacity: 0.7;
+            border-radius: 50%;
+            animation: float 5s infinite ease-in-out;
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(0px) translateX(0px);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-50px) translateX(20px);
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-100px) translateX(-20px);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Stock Market Sentiment Analysis</h1>
+        <button class="button" onclick="window.location.href='/predict';">Predict Sentiment</button>
+    </div>
+    <div class="particles"></div>
+    <script>
+        function createParticles() {
+            const particleContainer = document.querySelector('.particles');
+            for (let i = 0; i < 30; i++) {
+                let particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * 100 + 'vh';
+                particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                particleContainer.appendChild(particle);
+            }
+        }
+        createParticles();
+    </script>
+</body>
+</html>
