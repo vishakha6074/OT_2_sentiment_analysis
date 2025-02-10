@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <style>
+        body {
+            background: #121212;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .container {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.1);
+            text-align: center;
+            width: 400px;
+            animation: slideUp 1s ease-in-out;
+        }
+
+        .result {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ff9800;
+            margin-top: 15px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .result.visible {
+            opacity: 1;
+        }
+
+        button {
+            margin-top: 20px;
+            background: #ff9800;
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background: #ffb74d;
+            transform: scale(1.1);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Prediction Result</h1>
+    <div class="container">
+        <div class="result" id="output">{{ prediction }}</div>
+        <button onclick="goBack()">Try Again</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("output").classList.add("visible");
+        });
+
+        function goBack() {
+            window.location.href = "/";
+        }
+    </script>
+
+</body>
+</html>
