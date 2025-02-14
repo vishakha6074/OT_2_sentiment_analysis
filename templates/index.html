@@ -16,10 +16,51 @@
             font-family: Arial, sans-serif;
             overflow: hidden;
         }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #121212;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            z-index: 10;
+            animation: slideIn 0.5s ease-out;
+        }
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .navbar li {
+            margin-right: 30px;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: #00ffcc;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+        .navbar a:hover {
+            transform: scale(1.1);
+        }
+        @keyframes slideIn {
+            0% {
+                transform: translateY(-100%);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
         .container {
             text-align: center;
             color: #fff;
             position: relative;
+            margin-top: 80px; /* Adjusted for navbar */
         }
         .title {
             font-size: 3rem;
@@ -101,10 +142,20 @@
     </style>
 </head>
 <body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </div>
+    
     <div class="container">
         <h1 class="title">Stock Market Sentiment Analysis</h1>
         <button class="button" onclick="window.location.href='/predict';">Predict Sentiment</button>
     </div>
+
     <div class="particles"></div>
     <script>
         function createParticles() {

@@ -23,11 +23,11 @@ def predict():
             model=pickle.load(mc_file)
         pred = model.predict(dt)
         if pred==0:
-            pred="Negative"
-        if pred==1:
-            pred="Positive"
-        if pred==-1:
             pred="Neutral"
+        elif pred==1:
+            pred="Positive"
+        else:
+            pred="Negative"
         print(pred)
         return render_template("result.html", prediction=str(pred))
         
