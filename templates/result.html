@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Market Sentiment</title>
+    <title>Prediction Result</title>
     <style>
         body {
             margin: 0;
@@ -16,58 +16,20 @@
             font-family: Arial, sans-serif;
             overflow: hidden;
         }
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background-color: #121212;
-            padding: 20px 50px;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            z-index: 10;
-            animation: slideIn 0.5s ease-out;
-        }
-        .navbar ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
-        .navbar li {
-            margin-right: 30px;
-        }
-        .navbar a {
-            text-decoration: none;
-            color: #00ffcc;
-            font-size: 1.5rem;
-            font-weight: bold;
-            transition: transform 0.3s;
-        }
-        .navbar a:hover {
-            transform: scale(1.1);
-        }
-        @keyframes slideIn {
-            0% {
-                transform: translateY(-100%);
-            }
-            100% {
-                transform: translateY(0);
-            }
-        }
+
         .container {
             text-align: center;
             color: #fff;
             position: relative;
-            margin-top: 80px; /* Adjusted for navbar */
         }
+
         .title {
             font-size: 3rem;
             font-weight: bold;
             letter-spacing: 2px;
             animation: glow 1.5s infinite alternate ease-in-out;
         }
+
         @keyframes glow {
             from {
                 text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
@@ -76,6 +38,35 @@
                 text-shadow: 0 0 20px #00ffcc, 0 0 40px #00ffcc;
             }
         }
+
+        .result-box {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.1);
+            text-align: center;
+            width: 400px;
+            animation: slideUp 1s ease-in-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .result {
+            font-size: 22px;
+            font-weight: bold;
+            color: #00ffcc;
+            margin-top: 15px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .result.visible {
+            opacity: 1;
+        }
+
         .button {
             margin-top: 20px;
             padding: 15px 30px;
@@ -90,6 +81,7 @@
             position: relative;
             overflow: hidden;
         }
+
         .button::before {
             content: "";
             position: absolute;
@@ -101,13 +93,16 @@
             transition: all 0.6s ease;
             transform: translate(-50%, -50%) scale(0);
         }
+
         .button:hover::before {
             transform: translate(-50%, -50%) scale(1);
         }
+
         .button:active {
             transform: scale(0.95);
             box-shadow: 0 0 20px #00ffcc;
         }
+
         .particles {
             position: absolute;
             width: 100%;
@@ -116,6 +111,7 @@
             left: 0;
             pointer-events: none;
         }
+
         .particle {
             position: absolute;
             width: 5px;
@@ -125,6 +121,7 @@
             border-radius: 50%;
             animation: float 5s infinite ease-in-out;
         }
+
         @keyframes float {
             0% {
                 transform: translateY(0px) translateX(0px);
@@ -142,22 +139,27 @@
     </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <div class="navbar">
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/contact">Contact</a></li>
-        </ul>
-    </div>
-    
+
     <div class="container">
-        <h1 class="title">Stock Market Sentiment Analysis</h1>
-        <button class="button" onclick="window.location.href='/predict';">Predict Sentiment</button>
+        <h1 class="title">Prediction Result</h1>
+        <div class="result-box">
+            <div class="result" id="output">{{ prediction }}</div>
+            <button class="button" onclick="goBack()">Try Again</button>
+        </div>
     </div>
 
     <div class="particles"></div>
+
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("output").classList.add("visible");
+            createParticles();
+        });
+
+        function goBack() {
+            window.location.href = "/";
+        }
+
         function createParticles() {
             const particleContainer = document.querySelector('.particles');
             for (let i = 0; i < 30; i++) {
@@ -169,7 +171,7 @@
                 particleContainer.appendChild(particle);
             }
         }
-        createParticles();
     </script>
+
 </body>
 </html>
