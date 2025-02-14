@@ -23,8 +23,14 @@ def predict():
         with open("model.pickle","rb") as mb_file:
             model = pickle.load(mb_file)
         pred = model.predict(dt)
+        if pred[0]==1:
+            pred = "Positive"
+        elif pred[0]==0:
+            pred = "Neutral"
+        else:
+            pred ="Negative"
         print(pred)
-        return jsonify({"prediction":str(pred[0])})
+        return render_template("result.html",prediction=str(pred))
         
         
     else:
